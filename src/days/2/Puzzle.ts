@@ -1,14 +1,14 @@
 import CubeGame from '../../types/CubeGame';
 
 const first = (input: string) => {
-    const gameInfoList = input.split('\r\n');
+    const gameInfoList = input.split('\n');
 
     let sum = 0;
 
     for (let i = 0; i < gameInfoList.length; i++) {
-        const { isValid } = new CubeGame(gameInfoList[i]);
+        const cubeGame = new CubeGame(gameInfoList[i]);
 
-        if (isValid) sum += i + 1;
+        if (cubeGame.isValid) sum += i + 1;
     }
 
     return sum;
@@ -17,7 +17,7 @@ const first = (input: string) => {
 const expectedFirstSolution = 2283;
 
 const second = (input: string) => {
-    const gameInfoList = input.split('\r\n');
+    const gameInfoList = input.split('\n');
 
     let sum = 0;
 
@@ -33,4 +33,3 @@ const second = (input: string) => {
 const expectedSecondSolution = 78669;
 
 export { expectedFirstSolution, expectedSecondSolution, first, second };
-

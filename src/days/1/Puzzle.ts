@@ -1,5 +1,5 @@
 const first = (input: string) => {
-    const arr = input.split('\r\n');
+    const arr = input.split('\n');
 
     return [...arr].reduce((agg, word) => {
         let first: number | null = null;

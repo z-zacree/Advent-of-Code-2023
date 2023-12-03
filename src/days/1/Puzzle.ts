@@ -1,55 +1,55 @@
 const first = (input: string) => {
-  const arr = input.split("\r\n");
+    const arr = input.split('\r\n');
 
-  return [...arr].reduce((agg, word) => {
-    let first: number | null = null;
-    let last: number | null = null;
+    return [...arr].reduce((agg, word) => {
+        let first: number | null = null;
+        let last: number | null = null;
 
-    word.split("").forEach(char => {
-      if (isNaN(Number(char))) return;
+        word.split('').forEach((char) => {
+            if (isNaN(Number(char))) return;
 
-      if (first == null) first = (Number(char) * 10);
+            if (first == null) first = Number(char) * 10;
 
-      last = Number(char)
-    })
+            last = Number(char);
+        });
 
-    return agg + (first + (last ?? (first / 10)))
-  }, 0);
+        return agg + (first + (last ?? first / 10));
+    }, 0);
 };
 
 const expectedFirstSolution = 54708;
 
 const second = (input: string) => {
-  const arr = input.split("\n");
+    const arr = input.split('\n');
 
-  return [...arr].reduce((agg, word) => {
-    let firstIndex: number | null = null;
-    let firstValue: number | null = null;
+    return [...arr].reduce((agg, word) => {
+        let firstIndex: number | null = null;
+        let firstValue: number | null = null;
 
-    let lastIndex: number | null = null;
-    let lastValue: number | null = null;
+        let lastIndex: number | null = null;
+        let lastValue: number | null = null;
 
-    wordNums.forEach(({ value, label }) => {
-        const idx = word.indexOf(label)
-        const lastIdx = word.lastIndexOf(label)
+        wordNums.forEach(({ value, label }) => {
+            const idx = word.indexOf(label);
+            const lastIdx = word.lastIndexOf(label);
 
-        if (idx != -1) {
-            if (firstIndex == null || idx < firstIndex) {
-                firstIndex = idx
-                firstValue = value
+            if (idx != -1) {
+                if (firstIndex == null || idx < firstIndex) {
+                    firstIndex = idx;
+                    firstValue = value;
+                }
             }
-        }
 
-        if (lastIdx != -1) {
-            if (lastIndex == null || lastIdx > lastIndex) {
-                lastIndex = lastIdx
-                lastValue = value
+            if (lastIdx != -1) {
+                if (lastIndex == null || lastIdx > lastIndex) {
+                    lastIndex = lastIdx;
+                    lastValue = value;
+                }
             }
-        }
-    })
+        });
 
-    return agg + ((firstValue * 10) + lastValue);
-}, 0)
+        return agg + (firstValue * 10 + lastValue);
+    }, 0);
 };
 
 const expectedSecondSolution = 54087;
@@ -74,5 +74,5 @@ const wordNums = [
     { value: 6, label: '6' },
     { value: 7, label: '7' },
     { value: 8, label: '8' },
-    { value: 9, label: '9' }
+    { value: 9, label: '9' },
 ];

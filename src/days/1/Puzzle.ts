@@ -17,7 +17,7 @@ const first = (input: string) => {
     }, 0);
 };
 
-const expectedFirstSolution = 54708;
+const expectedFirstSolution = 142;
 
 const second = (input: string) => {
     const arr = input.split('\n');
@@ -52,7 +52,7 @@ const second = (input: string) => {
     }, 0);
 };
 
-const expectedSecondSolution = 54087;
+const expectedSecondSolution = 281;
 
 export { expectedFirstSolution, expectedSecondSolution, first, second };
 

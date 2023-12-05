@@ -14,7 +14,7 @@ const first = (input: string) => {
     return sum;
 };
 
-const expectedFirstSolution = 2283;
+const expectedFirstSolution = 8;
 
 const second = (input: string) => {
     const gameInfoList = input.split('\n');
@@ -30,6 +30,6 @@ const second = (input: string) => {
     return sum;
 };
 
-const expectedSecondSolution = 78669;
+const expectedSecondSolution = 2286;
 
 export { expectedFirstSolution, expectedSecondSolution, first, second };

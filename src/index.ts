@@ -4,23 +4,61 @@ import readFile from './utils/readFile';
 const args = process.argv.slice(2);
 const dayToSolve = args[0];
 
-if (!dayToSolve) {
-  console.error('No day specified run with npm run dev {day}');
-  process.exit(1);
-}
-console.log(`Solving Day #${args[0]}`);
-(async () => {
-  let input = '';
-  const puzzleName = args[0];
-  try {
-    const puzzlePath = `src/days/${puzzleName}`;
-    input = await readFile(`${puzzlePath}/input.txt`);
-  } catch (error) {
-    console.error(error);
-    process.exit(1);
-  }
-  const { first, second }: Puzzle = await import(`./days/${puzzleName}/Puzzle`);
+const useExample = args.includes('--use-example');
 
-  console.log(first(input));
-  console.log(second(input));
-})();
+if (!dayToSolve) {
+    console.error('No day specified run with npm run dev {day}');
+    process.exit(1);
+}
+
+console.log(`Solving Day #${dayToSolve}`);
+
+const solveInput = async () => {
+    let input = '';
+
+    const puzzleName = dayToSolve;
+
+    try {
+        const puzzlePath = `src/days/${puzzleName}`;
+
+        input = await readFile(`${puzzlePath}/input.txt`);
+    } catch (error) {
+        console.error(error);
+
+        process.exit(1);
+    }
+
+    const { first, second }: Puzzle = await import(
+        `./days/${puzzleName}/Puzzle`
+    );
+
+    console.log(first(input));
+    console.log(second(input));
+};
+
+const solveExamples = async () => {
+    let input1 = '';
+    let input2 = '';
+
+    const puzzleName = dayToSolve;
+
+    try {
+        const puzzlePath = `src/days/${puzzleName}`;
+
+        input1 = await readFile(`${puzzlePath}/example-1.txt`);
+        input2 = await readFile(`${puzzlePath}/example-2.txt`);
+    } catch (error) {
+        console.error(error);
+
+        process.exit(1);
+    }
+
+    const { first, second }: Puzzle = await import(
+        `./days/${puzzleName}/Puzzle`
+    );
+
+    console.log(first(input1));
+    console.log(second(input2));
+};
+
+useExample ? solveExamples() : solveInput();

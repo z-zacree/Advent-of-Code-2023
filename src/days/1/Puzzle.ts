@@ -13,7 +13,7 @@ const first = (input: string) => {
             last = Number(char);
         });
 
-        return agg + (first + (last ?? first / 10));
+        return agg + first + last;
     }, 0);
 };
 
@@ -34,7 +34,7 @@ const second = (input: string) => {
             if (idx != -1) {
                 if (firstIndex == null || idx < firstIndex) {
                     firstIndex = idx;
-                    firstValue = value;
+                    firstValue = value * 10;
                 }
             }
 
@@ -46,7 +46,7 @@ const second = (input: string) => {
             }
         });
 
-        return agg + (firstValue * 10 + lastValue);
+        return agg + firstValue + lastValue;
     }, 0);
 };
 

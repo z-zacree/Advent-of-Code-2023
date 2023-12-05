@@ -11,15 +11,15 @@ const first = (input: string) => {
 };
 
 const second = (input: string) => {
-    const scratchCards = input
-        .split('\n')
-        .map((scratchCardInfo) => new ScratchCard(scratchCardInfo));
+    const multiplierMap = new Map();
 
-    const multiplierMap = scratchCards.reduce((map, card) => {
-        map.set(card.id, 1);
+    const scratchCards = input.split('\n').map((scratchCardInfo, i) => {
+        const scratchCard = new ScratchCard(scratchCardInfo);
 
-        return map;
-    }, new Map());
+        multiplierMap.set(i + 1, 1);
+
+        return scratchCard;
+    });
 
     scratchCards.forEach(({ id, otherCards }) => {
         otherCards.forEach((cardId) => {

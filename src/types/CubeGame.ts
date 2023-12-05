@@ -1,21 +1,31 @@
 class CubeGame {
-  highestRoll: {red: number, green: number, blue: number};
+    highestRoll: Record<string, number> = { red: 0, green: 0, blue: 0 };
 
-  constructor(gameInfo: string) {
-    this.highestRoll = gameInfo.split(": ")[1].split("; ").reduce((collectHighest, rawRoll) => {
-      rawRoll.split(", ").forEach(roll => {
-        const [count, color] = roll.split(" ") as [number, "red" | "green" | "blue"];
+    constructor(rawGameInfo: string) {
+        const [gameInfo, rollInfo] = rawGameInfo.split(': ');
 
-        if (collectHighest[color] < count) collectHighest[color] = Number(count);
-      })
+        const rawRolls = rollInfo.split('; ');
 
-      return collectHighest
-    }, { red: 0, green: 0, blue: 0 })
-  }
+        rawRolls.forEach((rawRoll) => {
+            const dieCounts = rawRoll.split(', ');
 
-  get isValid() {
-    return this.highestRoll.red <= 12 && this.highestRoll.green <= 13 && this.highestRoll.blue <= 14
-  }
+            dieCounts.forEach((dieCount) => {
+                const [count, color] = dieCount.split(' ');
+
+                if (+count > this.highestRoll[color]) {
+                    this.highestRoll[color] = +count;
+                }
+            });
+        });
+    }
+
+    get isValid() {
+        return (
+            this.highestRoll.red <= 12 &&
+            this.highestRoll.green <= 13 &&
+            this.highestRoll.blue <= 14
+        );
+    }
 }
 
 export default CubeGame;

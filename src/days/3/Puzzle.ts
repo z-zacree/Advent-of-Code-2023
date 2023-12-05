@@ -2,29 +2,7 @@ const first = (input: string) => {
     const rows = input.split('\n');
 
     let parts: number[] = [];
-
-    const getNum = (y: number, x: number) => {
-        const part = rows[y]?.[x];
-
-        if (isNaN(+part)) return;
-
-        let num = 0;
-
-        while (!isNaN(+rows[y][x - 1])) {
-            x -= 1;
-        }
-
-        num = +rows[y]?.[x];
-
-        while (!isNaN(+rows[y][x + 1])) {
-            num *= 10;
-            num += +rows[y][x + 1];
-
-            x += 1;
-        }
-
-        return num;
-    };
+    const getNum = getNumHelper(rows);
 
     for (let y = 0; y < rows.length; y++) {
         const row = rows[y];
@@ -34,44 +12,16 @@ const first = (input: string) => {
 
             if (!isNaN(+char) || char == '.') continue;
 
-            const topSet = new Set<number>();
-            const midSet = new Set<number>();
-            const bottomSet = new Set<number>();
+            const map = new Map();
+            const check = checkHelper(y, x);
 
-            // top left
-            topSet.add(getNum(y - 1, x - 1));
+            check.forEach((check) => {
+                const { startIndex, num } = getNum(...check);
 
-            // top middle
-            topSet.add(getNum(y - 1, x));
+                if (!isNaN(num)) map.set(startIndex, num);
+            });
 
-            // top right
-            topSet.add(getNum(y - 1, x + 1));
-
-            // left
-            midSet.add(getNum(y, x - 1));
-
-            // right
-            midSet.add(getNum(y, x + 1));
-
-            // bottom left
-            bottomSet.add(getNum(y + 1, x - 1));
-
-            // bottom middle
-            bottomSet.add(getNum(y + 1, x));
-
-            // bottom right
-            bottomSet.add(getNum(y + 1, x + 1));
-
-            topSet.delete(undefined);
-            midSet.delete(undefined);
-            bottomSet.delete(undefined);
-
-            parts = [
-                ...parts,
-                ...Array.from(topSet),
-                ...Array.from(midSet),
-                ...Array.from(bottomSet),
-            ];
+            parts = [...parts, ...Array.from(map.values())];
         }
     }
 
@@ -82,29 +32,7 @@ const second = (input: string) => {
     const rows = input.split('\n');
 
     let gearRatios: number[] = [];
-
-    const getNum = (y: number, x: number) => {
-        const part = rows[y]?.[x];
-
-        if (isNaN(+part)) return;
-
-        let num = 0;
-
-        while (!isNaN(+rows[y][x - 1])) {
-            x -= 1;
-        }
-
-        num = +rows[y]?.[x];
-
-        while (!isNaN(+rows[y][x + 1])) {
-            num *= 10;
-            num += +rows[y][x + 1];
-
-            x += 1;
-        }
-
-        return num;
-    };
+    const getNum = getNumHelper(rows);
 
     for (let y = 0; y < rows.length; y++) {
         const row = rows[y];
@@ -114,45 +42,17 @@ const second = (input: string) => {
 
             if (!isNaN(+char) || char == '.') continue;
 
+            const map = new Map();
             let parts: number[] = [];
+            const check = checkHelper(y, x);
 
-            const topSet = new Set<number>();
-            const midSet = new Set<number>();
-            const bottomSet = new Set<number>();
+            check.forEach((check) => {
+                const { startIndex, num } = getNum(...check);
 
-            // top left
-            topSet.add(getNum(y - 1, x - 1));
+                if (!isNaN(num)) map.set(startIndex, num);
+            });
 
-            // top middle
-            topSet.add(getNum(y - 1, x));
-
-            // top right
-            topSet.add(getNum(y - 1, x + 1));
-
-            // left
-            midSet.add(getNum(y, x - 1));
-
-            // right
-            midSet.add(getNum(y, x + 1));
-
-            // bottom left
-            bottomSet.add(getNum(y + 1, x - 1));
-
-            // bottom middle
-            bottomSet.add(getNum(y + 1, x));
-
-            // bottom right
-            bottomSet.add(getNum(y + 1, x + 1));
-
-            topSet.delete(undefined);
-            midSet.delete(undefined);
-            bottomSet.delete(undefined);
-
-            parts = [
-                ...Array.from(topSet),
-                ...Array.from(midSet),
-                ...Array.from(bottomSet),
-            ];
+            parts = Array.from(map.values());
 
             if (parts.length == 2) {
                 gearRatios = [...gearRatios, parts[0] * parts[1]];
@@ -161,6 +61,43 @@ const second = (input: string) => {
     }
 
     return gearRatios.reduce((agg, curVal) => agg + curVal, 0);
+};
+
+const checkHelper = (y: number, x: number): [number, number][] => [
+    [y - 1, x - 1],
+    [y - 1, x],
+    [y - 1, x + 1],
+    [y, x - 1],
+    [y, x + 1],
+    [y + 1, x - 1],
+    [y + 1, x],
+    [y + 1, x + 1],
+];
+
+const getNumHelper = (rows: string[]) => (y: number, x: number) => {
+    let startIndex = -1;
+    const part = rows[y]?.[x];
+
+    if (isNaN(+part)) return { startIndex, num: NaN };
+
+    let num = 0;
+
+    while (!isNaN(+rows[y][x - 1])) {
+        x -= 1;
+    }
+
+    startIndex = x;
+
+    num = +rows[y]?.[x];
+
+    while (!isNaN(+rows[y][x + 1])) {
+        num *= 10;
+        num += +rows[y][x + 1];
+
+        x += 1;
+    }
+
+    return { startIndex, num };
 };
 
 const firstExampleSoln = 4361;

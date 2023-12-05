@@ -26,13 +26,13 @@ describe('AoC test runner', () => {
             }
             const {
                 first,
-                expectedFirstSolution,
+                firstExampleSoln,
                 second,
-                expectedSecondSolution,
+                secondExampleSoln,
             }: Puzzle = await import(`./days/${puzzleName}/Puzzle`);
 
-            expect(first(input1)).toBe(expectedFirstSolution);
-            expect(second(input2)).toBe(expectedSecondSolution);
+            expect(first(input1)).toBe(firstExampleSoln);
+            expect(second(input2)).toBe(secondExampleSoln);
         });
     }
 });

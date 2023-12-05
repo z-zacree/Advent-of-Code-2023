@@ -14,8 +14,6 @@ const first = (input: string) => {
     return sum;
 };
 
-const expectedFirstSolution = 8;
-
 const second = (input: string) => {
     const gameInfoList = input.split('\n');
 
@@ -30,6 +28,7 @@ const second = (input: string) => {
     return sum;
 };
 
-const expectedSecondSolution = 2286;
+const firstExampleSoln = 8;
+const secondExampleSoln = 2286;
 
-export { expectedFirstSolution, expectedSecondSolution, first, second };
+export { first, firstExampleSoln, second, secondExampleSoln };

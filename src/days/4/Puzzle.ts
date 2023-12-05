@@ -10,8 +10,6 @@ const first = (input: string) => {
         .reduce((agg, curVal) => agg + curVal, 0);
 };
 
-const expectedFirstSolution = 13;
-
 const second = (input: string) => {
     const scratchCards = input
         .split('\n')
@@ -38,6 +36,7 @@ const second = (input: string) => {
     );
 };
 
-const expectedSecondSolution = 30;
+const firstExampleSoln = 13;
+const secondExampleSoln = 30;
 
-export { expectedFirstSolution, expectedSecondSolution, first, second };
+export { first, firstExampleSoln, second, secondExampleSoln };

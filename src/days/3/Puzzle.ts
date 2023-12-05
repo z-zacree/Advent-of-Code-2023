@@ -78,8 +78,6 @@ const first = (input: string) => {
     return parts.reduce((agg, curVal) => agg + curVal, 0);
 };
 
-const expectedFirstSolution = 4361;
-
 const second = (input: string) => {
     const rows = input.split('\n');
 
@@ -165,6 +163,7 @@ const second = (input: string) => {
     return gearRatios.reduce((agg, curVal) => agg + curVal, 0);
 };
 
-const expectedSecondSolution = 467835;
+const firstExampleSoln = 4361;
+const secondExampleSoln = 467835;
 
-export { expectedFirstSolution, expectedSecondSolution, first, second };
+export { first, firstExampleSoln, second, secondExampleSoln };

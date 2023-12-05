@@ -34,8 +34,6 @@ const first = (input: string) => {
     }, 0);
 };
 
-const expectedFirstSolution = 35;
-
 const second = (input: string) => {
     let inputs = input.split('\n\n');
 
@@ -78,6 +76,7 @@ const second = (input: string) => {
     return min;
 };
 
-const expectedSecondSolution = 46;
+const firstExampleSoln = 35;
+const secondExampleSoln = 46;
 
-export { expectedFirstSolution, expectedSecondSolution, first, second };
+export { first, firstExampleSoln, second, secondExampleSoln };

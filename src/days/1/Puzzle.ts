@@ -17,8 +17,6 @@ const first = (input: string) => {
     }, 0);
 };
 
-const expectedFirstSolution = 142;
-
 const second = (input: string) => {
     const arr = input.split('\n');
 
@@ -52,9 +50,10 @@ const second = (input: string) => {
     }, 0);
 };
 
-const expectedSecondSolution = 281;
+const firstExampleSoln = 142;
+const secondExampleSoln = 281;
 
-export { expectedFirstSolution, expectedSecondSolution, first, second };
+export { first, firstExampleSoln, second, secondExampleSoln };
 
 const wordNums = [
     { value: 1, label: 'one' },

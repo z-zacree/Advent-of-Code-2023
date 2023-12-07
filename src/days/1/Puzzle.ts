@@ -1,53 +1,115 @@
+/**
+ * Solved this part using a two-pointer method.
+ *
+ * 1. Split the input into an array of words
+ * 2. Iterate through every word
+ * 3. While the first number is not set, we find the first "digit" from the start
+ * 4. Check if the character is a number
+ * 5. Set the first number, multiplied by 10
+ * 6. While the last number is not set, we find the last "digit" from the end
+ * 7. Set the last number
+ * 8. Since first number is already multiplied by 10, we can simply add the sum of the first and last numbers
+ */
 const first = (input: string) => {
-    const arr = input.split('\n');
+    // 1
+    const words = input.split('\n');
 
-    return [...arr].reduce((agg, word) => {
+    let sum = 0;
+
+    // 2
+    for (const word of words) {
+        let firstIndex = -1;
         let first: number | null = null;
+
+        let lastIndex = word.length;
         let last: number | null = null;
 
-        word.split('').forEach((char) => {
-            if (isNaN(Number(char))) return;
+        // 3
+        while (first == null && firstIndex++ <= lastIndex) {
+            const char = word[firstIndex];
 
-            if (first == null) first = Number(char) * 10;
+            // 4
+            if (!isNaN(+char)) {
+                // 5
+                first = Number(char) * 10;
 
-            last = Number(char);
-        });
+                break;
+            }
+        }
 
-        return agg + first + last;
-    }, 0);
+        // 6
+        while (last == null && lastIndex-- >= firstIndex - 1) {
+            const char = word[lastIndex];
+
+            // 4
+            if (!isNaN(+char)) {
+                // 7
+                last = Number(char);
+
+                break;
+            }
+        }
+
+        // 8
+        sum += (first ?? 0) + (last ?? 0);
+    }
+
+    return sum;
 };
 
+/**
+ * Solved this part using a two-pointer method.
+ *
+ * 1. Follow steps 1 and 2 in part 1
+ * 2. Iterate through every valid "digit"
+ * 3. Retrieve the first index of the digit
+ * 4. Check if the index is valid
+ *    (since we're comparing if the index is < the existing index, we need to check against -1)
+ *
+ * 5. Retrieve the last index of the digit only after the first index has been found
+ * 6. Check if the index is valid
+ * 7. Since first number is already multiplied by 10, we can simply add the sum of the first and last numbers.
+ */
 const second = (input: string) => {
-    const arr = input.split('\n');
+    // 1
+    const words = input.split('\n');
 
-    return [...arr].reduce((agg, word) => {
-        let firstIndex: number | null = null;
-        let firstValue: number | null = null;
+    let sum = 0;
 
-        let lastIndex: number | null = null;
-        let lastValue: number | null = null;
+    for (const word of words) {
+        let firstIndex = Infinity;
+        let first: number | null = null;
 
-        wordNums.forEach(({ value, label }) => {
+        let lastIndex = -1;
+        let last: number | null = null;
+
+        // 2
+        digitMap.forEach(([label, value]) => {
+            // 3
             const idx = word.indexOf(label);
-            const lastIdx = word.lastIndexOf(label);
 
-            if (idx != -1) {
+            // 4
+            if (idx > -1) {
                 if (firstIndex == null || idx < firstIndex) {
                     firstIndex = idx;
-                    firstValue = value * 10;
+                    first = value * 10;
                 }
-            }
 
-            if (lastIdx != -1) {
+                // 5
+                const lastIdx = word.lastIndexOf(label);
+
+                // 6
                 if (lastIndex == null || lastIdx > lastIndex) {
                     lastIndex = lastIdx;
-                    lastValue = value;
+                    last = value;
                 }
             }
         });
 
-        return agg + firstValue + lastValue;
-    }, 0);
+        sum += (first ?? 0) + (last ?? 0);
+    }
+
+    return sum;
 };
 
 const firstExampleSoln = 142;
@@ -55,23 +117,23 @@ const secondExampleSoln = 281;
 
 export { first, firstExampleSoln, second, secondExampleSoln };
 
-const wordNums = [
-    { value: 1, label: 'one' },
-    { value: 2, label: 'two' },
-    { value: 3, label: 'three' },
-    { value: 4, label: 'four' },
-    { value: 5, label: 'five' },
-    { value: 6, label: 'six' },
-    { value: 7, label: 'seven' },
-    { value: 8, label: 'eight' },
-    { value: 9, label: 'nine' },
-    { value: 1, label: '1' },
-    { value: 2, label: '2' },
-    { value: 3, label: '3' },
-    { value: 4, label: '4' },
-    { value: 5, label: '5' },
-    { value: 6, label: '6' },
-    { value: 7, label: '7' },
-    { value: 8, label: '8' },
-    { value: 9, label: '9' },
-];
+const digitMap = Object.entries({
+    one: 1,
+    two: 2,
+    three: 3,
+    four: 4,
+    five: 5,
+    six: 6,
+    seven: 7,
+    eight: 8,
+    nine: 9,
+    '1': 1,
+    '2': 2,
+    '3': 3,
+    '4': 4,
+    '5': 5,
+    '6': 6,
+    '7': 7,
+    '8': 8,
+    '9': 9,
+});
